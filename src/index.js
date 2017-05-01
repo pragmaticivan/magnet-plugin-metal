@@ -1,5 +1,6 @@
 import {assertDefAndNotNull, assertString} from 'metal-assertions';
 import {isFunction, isObject, isString} from 'metal';
+import metalJsx from 'babel-preset-metal-jsx';
 import Component from 'metal-component';
 import soy from 'metal-tools-soy';
 
@@ -21,10 +22,15 @@ const buildSoyFiles = (src, dest) =>
   });
 
 export default {
+  babelPresets() {
+    return [metalJsx];
+  },
+
   async build(magnet) {
     const config = magnet.getConfig();
-    const src = config.magnet.pluginsConfig.metal.soySrc;
-    const dest = config.magnet.pluginsConfig.metal.soyDest;
+
+    const src = config.magnet.pluginsConfig.metal.soySrc || ['**/*.soy'];
+    const dest = config.magnet.pluginsConfig.metal.soyDest || ['.'];
 
     // Trivially excludes soy compilation when there are no matching soy files
     // in the application directory.
