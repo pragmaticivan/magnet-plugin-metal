@@ -28,9 +28,17 @@ export default {
 
   async build(magnet) {
     const config = magnet.getConfig();
+    const metalConfig = config.magnet.pluginsConfig.metal;
+    let src = ['**/*.soy'];
+    let dest = ['.'];
 
-    const src = config.magnet.pluginsConfig.metal.soySrc || ['**/*.soy'];
-    const dest = config.magnet.pluginsConfig.metal.soyDest || ['.'];
+    if (metalConfig && metalConfig.soySrc) {
+      src = metalConfig.soySrc;
+    }
+
+    if (metalConfig && metalConfig.soyDest) {
+      dest = metalConfig.soyDest;
+    }
 
     // Trivially excludes soy compilation when there are no matching soy files
     // in the application directory.
