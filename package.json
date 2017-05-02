@@ -28,7 +28,6 @@
   },
   "dependencies": {
     "babel-preset-metal-jsx": "0.1.1",
-    "jsdom": "^10.1.0",
     "magnet": "latest",
     "metal": "^2.6.4",
     "metal-assertions": "^2.8.0",
@@ -45,6 +44,7 @@
     "eslint-config-liferay": "^1.0.1",
     "babel-register": "^6.23.0",
     "mocha": "^3.2.0",
+    "jsdom": "^10.1.0",
     "chai": "^3.5.0",
     "sinon": "^1.17.7",
     "sinon-chai": "^2.8.0"
