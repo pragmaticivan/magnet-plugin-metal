@@ -1,0 +1,18 @@
+{
+  "extends": ["liferay"],
+  "globals": {
+    "expect": false,
+    "mock": false,
+    "stub": false,
+    "spy": false,
+    "assertAsyncHttpRequest": false
+  },
+  "env": {
+    "node": true,
+    "mocha": true,
+    "es6": true
+  },
+  "rules": {
+    "max-len": 0
+  }
+}
