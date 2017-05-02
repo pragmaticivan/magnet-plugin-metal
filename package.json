@@ -15,7 +15,8 @@
     "build": "babel --presets es2015 -d lib/ src/",
     "format": "prettier --single-quote --no-bracket-spacing --trailing-comma es5 --write \"{src/**/*.js}\" && eslint --fix \"{src/**/*.js}\"",
     "lint": "eslint src/**/*.js",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "test": "mocha --compilers js:babel-core/register test/setup/node.js test/unit/**/*.js"
   },
   "contributors": [
     "Ivan Santos <ivan.santos@liferay.com>"
