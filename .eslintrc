@@ -5,8 +5,9 @@
     "es6": true
   },
   "globals": {
+    "__MAGNET_STATE__": true,
+    "document": true,
     "IncrementalDOM": true,
-    "window": true,
-    "document": true
+    "window": true
   }
 }
