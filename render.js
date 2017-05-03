@@ -70,7 +70,7 @@ window.__MAGNET_RENDER__ = function(componentName, initialState) {
  * @param {?object=} config
  * @return {Router} The route for the registered component.
  */
-window.__MAGNET_REGITER_PAGE__ = function(
+window.__MAGNET_REGISTER_PAGE__ = function(
     path,
     componentName,
     config = {
