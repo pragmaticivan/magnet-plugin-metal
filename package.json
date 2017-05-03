@@ -33,7 +33,6 @@
     "babel-preset-metal-jsx": "0.1.1",
     "express": "^4.15.2",
     "fs-extra": "^3.0.0",
-    "magnet": "latest",
     "metal": "^2.6.4",
     "metal-assertions": "^2.8.0",
     "metal-component": "^2.10.0",
@@ -43,6 +42,7 @@
     "webpack": "^2.4.1"
   },
   "devDependencies": {
+    "magnet": "latest",
     "babel-cli": "^6.24.1",
     "eslint": "^3.17.1",
     "prettier": "^1.2.2",
@@ -50,8 +50,6 @@
     "babel-register": "^6.23.0",
     "mocha": "^3.2.0",
     "jsdom": "^10.1.0",
-    "chai": "^3.5.0",
-    "sinon": "^1.17.7",
-    "sinon-chai": "^2.8.0"
+    "chai": "^3.5.0"
   }
 }

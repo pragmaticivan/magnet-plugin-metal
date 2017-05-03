@@ -3,8 +3,6 @@
   "globals": {
     "expect": false,
     "mock": false,
-    "stub": false,
-    "spy": false,
     "assertAsyncHttpRequest": false
   },
   "env": {
