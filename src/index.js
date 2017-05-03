@@ -3,6 +3,8 @@ import {isFunction, isObject, isString} from 'metal';
 import metalJsx from 'babel-preset-metal-jsx';
 import Component from 'metal-component';
 import buildSoy from './build-soy';
+import buildClient from './build-client';
+import path from 'path';
 
 const defaultLayout = async (req, content, initialState) =>
   `
@@ -22,6 +24,7 @@ export default {
 
   async build(magnet) {
     await buildSoy(magnet);
+    await buildClient(magnet);
   },
 
   test(module, filename, magnet) {
@@ -29,7 +32,7 @@ export default {
   },
 
   register(module, filename, magnet) {
-    let path = module.route.path;
+    let routePath = module.route.path;
     let method = module.route.method || 'get';
     let type = module.route.type || 'html';
     let fileshort = filename.substring(magnet.getServerDistDirectory().length);
@@ -39,13 +42,13 @@ export default {
       `Route configuration method must be a string, ` + `check ${fileshort}.`
     );
     assertDefAndNotNull(
-      path,
+      routePath,
       `Route configuration path must be specified, ` + `check ${fileshort}.`
     );
 
     let app = magnet.getServer().getEngine();
 
-    app[method.toLowerCase()](path, async (req, res, next) => {
+    app[method.toLowerCase()](routePath, async (req, res, next) => {
       try {
         if (!res.headersSent) {
           const getInitialState = module.default.getInitialState;
@@ -65,7 +68,18 @@ export default {
 
             res
               .type(type)
-              .send('<!DOCTYPE html>' + renderLayoutToString(layout));
+              .send(
+                `<!DOCTYPE html>${renderLayoutToString(layout)}` +
+                `<script src="/.metal/common.js"></script>` +
+                `<script src="/.metal/render.js"></script>` +
+                `<script src="${path.join('/.metal/', fileshort)}"></script>` +
+                `<script>
+                  __MAGNET_METAL_PAGE__ = '${module.default.name}';
+                  __MAGNET_METAL_STATE__ = ${JSON.stringify(data)};
+                  __MAGNET_METAL_RENDER__(
+                    __MAGNET_METAL_PAGE__, __MAGNET_METAL_STATE__);
+                </script>`
+              );
           }
         }
       } catch (error) {

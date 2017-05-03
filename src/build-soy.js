@@ -9,13 +9,13 @@ const buildSoyFiles = (src, dest) =>
   export default async (magnet) => {
     const config = magnet.getConfig();
     const metalConfig = config.magnet.pluginsConfig.metal;
-    let src = ['**/*.soy'];
-    let dest = ['.'];
 
+    let src = ['**/*.soy'];
     if (metalConfig && metalConfig.soySrc) {
       src = metalConfig.soySrc;
     }
 
+    let dest = ['.'];
     if (metalConfig && metalConfig.soyDest) {
       dest = metalConfig.soyDest;
     }

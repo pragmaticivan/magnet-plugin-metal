@@ -5,6 +5,8 @@
     "es6": true
   },
   "globals": {
-    "IncrementalDOM": true
+    "IncrementalDOM": true,
+    "window": true,
+    "document": true
   }
 }
