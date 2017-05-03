@@ -9,7 +9,8 @@
   "jsnext:main": "src/index.js",
   "files": [
     "lib",
-    "src"
+    "src",
+    "render.js"
   ],
   "scripts": {
     "build": "babel --presets es2015 -d lib/ src/",
