@@ -1,5 +1,5 @@
 import {assertDefAndNotNull, assertString} from 'metal-assertions';
-import {isFunction, isObject, isString} from 'metal';
+import {isDefAndNotNull, isFunction, isObject, isString} from 'metal';
 import metalJsx from 'babel-preset-metal-jsx';
 import Component from 'metal-component';
 import buildSoy from './build-soy';
@@ -62,7 +62,7 @@ export default {
           data.__MAGNET_PAGE__ = module.default.name;
           data.__MAGNET_PAGE_SOURCE__ = path.join('/.metal/', fileshort);
 
-          if (isContentTypeJson(req)) {
+          if (isContentTypeJson(req) || isXPJAX(req)) {
             res.json(data);
           } else {
             const layout = await renderLayout(
@@ -132,4 +132,13 @@ function renderLayoutToString(fnOrString) {
 function isContentTypeJson(req) {
   const contentType = req.get('content-type') || '';
   return contentType.toLowerCase().indexOf('application/json') === 0;
+}
+
+/**
+ * Check if request contains X-PJAX header.
+ * @param {Object} req
+ * @return {boolean}
+ */
+function isXPJAX(req) {
+  return isDefAndNotNull(req.get('X-PJAX'));
 }
