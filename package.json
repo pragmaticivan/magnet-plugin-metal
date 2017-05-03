@@ -19,6 +19,7 @@
     "test": "mocha --compilers js:babel-core/register test/setup/node.js test/unit/**/*.js"
   },
   "contributors": [
+    "Eduardo Lundgren <eduardo.lundgren@liferay.com>",
     "Ivan Santos <ivan.santos@liferay.com>"
   ],
   "license": "BSD-3-Clause",
