@@ -95,7 +95,6 @@ export default (magnet) => {
         colors: true,
         chunks: false,
       });
-      console.log(output);
       serveMetalFilesOnce(magnet, outputDirectory);
       resolve(output);
     });
