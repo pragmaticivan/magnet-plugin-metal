@@ -93,6 +93,8 @@ export default {
                 `</script>` +
                 `<script>` +
                   `__MAGNET_ROUTES__=${JSON.stringify(routes)};` +
+                  `__MAGNET_ROUTES__.forEach(` +
+                    `function(r) {__MAGNET_REGISTER_PAGE__(r.path, r.page)});` +
                 `</script>`
               );
           }
