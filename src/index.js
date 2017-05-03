@@ -28,7 +28,8 @@ export default {
   },
 
   test(module, filename, magnet) {
-    return isObject(module.route) && Component.isComponentCtor(module.default);
+    return isObject(module.route)
+      && Component.isComponentCtor(module.default) === true;
   },
 
   register(module, filename, magnet) {
