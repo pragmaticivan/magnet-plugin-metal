@@ -1,7 +1,7 @@
 import {Component} from 'metal-component';
 import {ComponentRegistry} from 'metal-component';
 
-window.__MAGNET_METAL_RENDER__ = function(componentName, initialState) {
+window.__MAGNET_RENDER__ = function(componentName, initialState) {
   if (!document.body.firstChild) {
     document.body.insertAdjacentHTML('afterbegin', '<div></div>');
   }

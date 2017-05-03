@@ -53,10 +53,15 @@ export default {
         if (!res.headersSent) {
           const getInitialState = module.default.getInitialState;
           const renderLayout = module.default.renderLayout || defaultLayout;
+
           let data;
           if (isFunction(getInitialState)) {
-            data = await getInitialState(req);
+            data = await getInitialState(req) || {};
           }
+
+          data.__MAGNET_PAGE__ = module.default.name;
+          data.__MAGNET_PAGE_SOURCE__ = path.join('/.metal/', fileshort);
+
           if (isContentTypeJson(req)) {
             res.json(data);
           } else {
@@ -72,13 +77,12 @@ export default {
                 `<!DOCTYPE html>${renderLayoutToString(layout)}` +
                 `<script src="/.metal/common.js"></script>` +
                 `<script src="/.metal/render.js"></script>` +
-                `<script src="${path.join('/.metal/', fileshort)}"></script>` +
-                `<script>
-                  __MAGNET_METAL_PAGE__ = '${module.default.name}';
-                  __MAGNET_METAL_STATE__ = ${JSON.stringify(data)};
-                  __MAGNET_METAL_RENDER__(
-                    __MAGNET_METAL_PAGE__, __MAGNET_METAL_STATE__);
-                </script>`
+                `<script src="${data.__MAGNET_PAGE_SOURCE__}"></script>` +
+                `<script>` +
+                  `__MAGNET_STATE__=${JSON.stringify(data)};` +
+                  `__MAGNET_RENDER__(` +
+                    `__MAGNET_STATE__.__MAGNET_PAGE__, __MAGNET_STATE__);` +
+                `</script>`
               );
           }
         }
