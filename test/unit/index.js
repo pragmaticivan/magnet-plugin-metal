@@ -43,7 +43,7 @@ describe('pluginMetal', () => {
       expect(pluginMetal.test(mod, null, null)).to.be.true;
     });
 
-    it('should return undefined if module is not a metal component', function() {
+    it('should return false if module is not a metal component', function() {
       const mod = {};
       mod.route = {};
       mod.default = () => {};
