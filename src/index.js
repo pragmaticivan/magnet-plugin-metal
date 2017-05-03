@@ -107,14 +107,7 @@ export default {
  * @return {string}
  */
 function renderToString(ctor, data) {
-  try {
-    return Component.renderToString(ctor, data);
-  } catch (error) {
-    throw new Error(
-      `Metal.js component type defined in this route cannot be rendered ` +
-        `from the server, only Soy or JSX components are supported.`
-    );
-  }
+  return Component.renderToString(ctor, data);
 }
 
 /**
