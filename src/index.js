@@ -4,7 +4,7 @@ import metalJsx from 'babel-preset-metal-jsx';
 import Component from 'metal-component';
 import buildSoy from './build-soy';
 import buildClient from './build-client';
-import path from 'path';
+import nodePath from 'path';
 
 const defaultLayout = async (req, content, initialState) =>
   `
@@ -16,6 +16,8 @@ const defaultLayout = async (req, content, initialState) =>
   ${content}
 </body>
 </html>`;
+
+const routes = [];
 
 export default {
   babelPresets() {
@@ -33,9 +35,10 @@ export default {
   },
 
   register(module, filename, magnet) {
-    let routePath = module.route.path;
+    let path = module.route.path;
     let method = module.route.method || 'get';
     let type = module.route.type || 'html';
+    let page = module.default.name;
     let fileshort = filename.substring(magnet.getServerDistDirectory().length);
 
     assertString(
@@ -43,13 +46,15 @@ export default {
       `Route configuration method must be a string, ` + `check ${fileshort}.`
     );
     assertDefAndNotNull(
-      routePath,
+      path,
       `Route configuration path must be specified, ` + `check ${fileshort}.`
     );
 
+    registerRoute({path, page});
+
     let app = magnet.getServer().getEngine();
 
-    app[method.toLowerCase()](routePath, async (req, res, next) => {
+    app[method.toLowerCase()](path, async (req, res, next) => {
       try {
         if (!res.headersSent) {
           const getInitialState = module.default.getInitialState;
@@ -61,7 +66,7 @@ export default {
           }
 
           data.__MAGNET_PAGE__ = module.default.name;
-          data.__MAGNET_PAGE_SOURCE__ = path.join('/.metal/', fileshort);
+          data.__MAGNET_PAGE_SOURCE__ = nodePath.join('/.metal/', fileshort);
 
           if (isContentTypeJson(req) || isXPJAX(req)) {
             res.set('Cache-Control',
@@ -85,6 +90,9 @@ export default {
                   `__MAGNET_STATE__=${JSON.stringify(data)};` +
                   `__MAGNET_RENDER__(` +
                     `__MAGNET_STATE__.__MAGNET_PAGE__, __MAGNET_STATE__);` +
+                `</script>` +
+                `<script>` +
+                  `__MAGNET_ROUTES__=${JSON.stringify(routes)};` +
                 `</script>`
               );
           }
@@ -125,6 +133,26 @@ function renderLayoutToString(fnOrString) {
         `from the server, only String or JSX layouts are supported.`
     );
   }
+}
+
+/**
+ * Register route.
+ * @param {object} route
+ */
+function registerRoute(route) {
+  if (isRegex(route.path)) {
+    route.path = `regex:${route.path.toString()}`;
+  }
+  routes.push(route);
+}
+
+/**
+ * Test if value is regex.
+ * @param {*} value
+ * @return {boolean}
+ */
+function isRegex(value) {
+  return Object.prototype.toString.call(value) === '[object RegExp]';
 }
 
 /**
