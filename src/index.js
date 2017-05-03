@@ -64,7 +64,9 @@ export default {
           data.__MAGNET_PAGE_SOURCE__ = path.join('/.metal/', fileshort);
 
           if (isContentTypeJson(req) || isXPJAX(req)) {
-            res.json(data);
+            res.set('Cache-Control',
+                'no-cache, max-age=0, private, must-revalidate, no-store')
+              .json(data);
           } else {
             const layout = await renderLayout(
               req,
