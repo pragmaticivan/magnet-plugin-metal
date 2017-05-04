@@ -92,7 +92,7 @@ window.__MAGNET_REGISTER_PAGE__ = function(
 function normalizePath(path) {
   if (path.indexOf('regex:') === 0) {
     let value = path.substring(6);
-    let pattern = value.substring(0, value.lastIndexOf('/') + 1);
+    let pattern = value.substring(1, value.lastIndexOf('/'));
     let flags = value.substring(value.lastIndexOf('/') + 1);
     return new RegExp(pattern, flags);
   }
