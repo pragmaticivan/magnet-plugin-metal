@@ -96,4 +96,5 @@ function normalizePath(path) {
     let flags = value.substring(value.lastIndexOf('/') + 1);
     return new RegExp(pattern, flags);
   }
+  return path;
 }
