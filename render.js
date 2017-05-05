@@ -104,3 +104,22 @@ function normalizePath(path) {
   }
   return path;
 }
+
+// Events ----------------------------------------------------------------------
+
+__MAGNET_ROUTER__.on('endNavigate', (data) => {
+  // Redirects in case of request error
+  if (data.error) {
+    if (data.error.requestError) {
+      window.location.href = data.path;
+    }
+    return;
+  }
+});
+
+__MAGNET_ROUTER__.on('startNavigate', (data) => {
+  // Clear router cache after for submission
+  if (data.form) {
+    Router.router().clearScreensCache();
+  }
+});
