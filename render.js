@@ -120,6 +120,6 @@ __MAGNET_ROUTER__.on('endNavigate', (data) => {
 __MAGNET_ROUTER__.on('startNavigate', (data) => {
   // Clear router cache after for submission
   if (data.form) {
-    Router.router().clearScreensCache();
+    __MAGNET_ROUTER__.clearScreensCache();
   }
 });
