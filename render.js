@@ -74,7 +74,7 @@ window.__MAGNET_REGISTER_PAGE__ = function(
     path,
     componentName,
     config = {
-      element: 'body :first-child',
+      element: 'body > :not(script)',
       fetch: true,
       fetchTimeout: 120000,
     }
