@@ -112,8 +112,8 @@ function enhanceLayout(layoutContent, data) {
   assertLayoutContainsBody(layoutContent);
 
   layoutContent = layoutContent
-    .replace('<body>', '<body><script src="/.metal/common.js"></script>')
     .replace('</body>',
+      `<script src="/.metal/common.js"></script>` +
       `<script src="/.metal/render.js"></script>` +
       `<script src="${data.__MAGNET_PAGE_SOURCE__}"></script>` +
       `<script>` +
