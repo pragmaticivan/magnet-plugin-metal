@@ -117,13 +117,11 @@ function enhanceLayout(layoutContent, data) {
       `<script src="/.metal/render.js"></script>` +
       `<script src="${data.__MAGNET_PAGE_SOURCE__}"></script>` +
       `<script>` +
-      `document.addEventListener('DOMContentLoaded', function() {` +
       `__MAGNET_STATE__=${JSON.stringify(data)};` +
       `__MAGNET_RENDER__(__MAGNET_STATE__.__MAGNET_PAGE__, __MAGNET_STATE__);` +
       `__MAGNET_ROUTES__=${JSON.stringify(routes)};` +
       `__MAGNET_ROUTES__.forEach(` +
         `function(r) {__MAGNET_REGISTER_PAGE__(r.path, r.page)});` +
-      `});` +
       `</script></body>`);
 
   return `<!DOCTYPE html>${layoutContent}`;
