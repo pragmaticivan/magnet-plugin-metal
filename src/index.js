@@ -60,7 +60,7 @@ export default {
           const getInitialState = module.default.getInitialState;
           const renderLayout = module.default.renderLayout || defaultLayout;
 
-          let data;
+          let data = {};
           if (isFunction(getInitialState)) {
             data = await getInitialState(req, res) || {};
           }
