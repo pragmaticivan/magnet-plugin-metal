@@ -85,6 +85,12 @@ window.__MAGNET_REGISTER_PAGE__ = function(
 };
 
 /**
+ * Returns internal router instance.
+ * @type {Router}
+ */
+window.__MAGNET_ROUTER__ = Router.router();
+
+/**
  * Normalize path. Supports evaluation of "regex:" prefixed paths.
  * @param {string} path
  * @return {string|RegExp}
