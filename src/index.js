@@ -6,16 +6,8 @@ import buildSoy from './build-soy';
 import buildClient from './build-client';
 import nodePath from 'path';
 
-const defaultLayout = async (req, content, initialState) =>
-  `
-<html>
-<head>
-  <meta charset="UTF-8"/>
-</head>
-<body>
-  ${content}
-</body>
-</html>`;
+const defaultLayout = (req, content, initialState) =>
+  `<html><head></head><body>${content}</body></html>`;
 
 const routes = [];
 
