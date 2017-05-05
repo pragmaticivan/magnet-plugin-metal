@@ -54,11 +54,13 @@ Router.defaultScreen = MagnetScreen;
  * @return {Component} The rendered component.
  */
 window.__MAGNET_RENDER__ = function(componentName, initialState) {
-  if (!document.body.firstChild) {
+  let lookupPatchElement = () => document.querySelector('body > :not(script)');
+  if (!lookupPatchElement()) {
+    // Inserts element to start patching
     document.body.insertAdjacentHTML('afterbegin', '<div></div>');
   }
   initialState = initialState || {};
-  initialState.element = document.body.firstChild;
+  initialState.element = lookupPatchElement();
   return Component.render(
     ComponentRegistry.getConstructor(componentName), initialState);
 };
