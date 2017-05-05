@@ -35,9 +35,6 @@ const buildWebpackConfig = (entry, directory, outputDirectory) => {
       filename: '[name]',
     },
     plugins: plugins,
-    resolve: {
-      mainFields: ['jsnext:main', 'browser', 'main'],
-    },
     resolveLoader: {
       modules: [path.join(__dirname, '../node_modules'), 'node_modules'],
     },
