@@ -81,22 +81,7 @@ export default {
 
             res
               .type(type)
-              .send(
-                `<!DOCTYPE html>${renderLayoutToString(layout)}` +
-                `<script src="/.metal/common.js"></script>` +
-                `<script src="/.metal/render.js"></script>` +
-                `<script src="${data.__MAGNET_PAGE_SOURCE__}"></script>` +
-                `<script>` +
-                  `__MAGNET_STATE__=${JSON.stringify(data)};` +
-                  `__MAGNET_RENDER__(` +
-                    `__MAGNET_STATE__.__MAGNET_PAGE__, __MAGNET_STATE__);` +
-                `</script>` +
-                `<script>` +
-                  `__MAGNET_ROUTES__=${JSON.stringify(routes)};` +
-                  `__MAGNET_ROUTES__.forEach(` +
-                    `function(r) {__MAGNET_REGISTER_PAGE__(r.path, r.page)});` +
-                `</script>`
-              );
+              .send(enhanceLayout(renderLayoutToString(layout), data));
           }
         }
       } catch (error) {
@@ -107,7 +92,50 @@ export default {
 };
 
 /**
- * Render incremental dom based components to string.
+ * Asserts layout content has "<body></body>".
+ * @param {string} layoutContent
+ */
+function assertLayoutContainsBody(layoutContent) {
+  if (layoutContent.toLowerCase().indexOf('<body>') === -1 ||
+      layoutContent.toLowerCase().indexOf('</body>') === -1) {
+    throw new Error('Error. Page layout does not contain <body></body>".');
+  }
+}
+
+/**
+ * Enhances layout adding doctype and scripts necessary for rendering page.
+ * @param {!string} layoutContent
+ * @param {!Object} data
+ * @return {string}
+ */
+function enhanceLayout(layoutContent, data) {
+  assertLayoutContainsBody(layoutContent);
+
+  layoutContent.replace(
+    '<body>', '<body><script src="/.metal/common.js"></script>');
+
+  layoutContent.replace(
+    '</body>',
+      `<script src="/.metal/common.js"></script>` +
+      `<script src="/.metal/render.js"></script>` +
+      `<script src="${data.__MAGNET_PAGE_SOURCE__}"></script>` +
+      `<script>` +
+        `__MAGNET_STATE__=${JSON.stringify(data)};` +
+        `__MAGNET_RENDER__(` +
+          `__MAGNET_STATE__.__MAGNET_PAGE__, __MAGNET_STATE__);` +
+      `</script>` +
+      `<script>` +
+        `__MAGNET_ROUTES__=${JSON.stringify(routes)};` +
+        `__MAGNET_ROUTES__.forEach(` +
+          `function(r) {__MAGNET_REGISTER_PAGE__(r.path, r.page)});` +
+      `</script>` +
+      `</body>`);
+
+  return `<!DOCTYPE html>${layoutContent}`;
+}
+
+/**
+ * Renders incremental dom based components to string.
  * @param {Class} ctor
  * @param {Object} data
  * @return {string}
@@ -117,7 +145,7 @@ function renderToString(ctor, data) {
 }
 
 /**
- * Render incremental dom based layouts to string.
+ * Renders incremental dom based layouts to string.
  * @param {function|string} fnOrString
  * @return {string}
  */
@@ -138,7 +166,7 @@ function renderLayoutToString(fnOrString) {
 }
 
 /**
- * Register route.
+ * Registers route.
  * @param {object} route
  */
 function registerRoute(route) {
@@ -149,7 +177,7 @@ function registerRoute(route) {
 }
 
 /**
- * Test if value is regex.
+ * Tests if value is regex.
  * @param {*} value
  * @return {boolean}
  */
@@ -158,7 +186,7 @@ function isRegex(value) {
 }
 
 /**
- * Check if request content type is application/json.
+ * Checks if request content type is application/json.
  * @param {Object} req
  * @return {boolean}
  */
@@ -168,7 +196,7 @@ function isContentTypeJson(req) {
 }
 
 /**
- * Check if request contains X-PJAX header.
+ * Checks if request contains X-PJAX header.
  * @param {Object} req
  * @return {boolean}
  */
