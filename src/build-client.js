@@ -3,18 +3,6 @@ import es2015 from 'babel-preset-es2015';
 import metalJsx from 'babel-preset-metal-jsx';
 import webpack from 'webpack';
 import fs from 'fs-extra';
-import express from 'express';
-
-let isServingMetalFiles = false;
-
-const serveMetalFilesOnce = (magnet, outputDirectory) => {
-  if (!isServingMetalFiles) {
-    magnet.getServer()
-      .getEngine()
-      .use('/.metal', express.static(outputDirectory));
-  }
-  isServingMetalFiles = true;
-};
 
 const metalDirectory = '.magnet/metal';
 
@@ -65,7 +53,7 @@ export default (magnet) => {
   }
 
   let directory = magnet.getDirectory();
-  let outputDirectory = path.join(magnet.getDirectory(), metalDirectory);
+  let outputDirectory = path.join(directory, metalDirectory);
   let files = magnet.getFiles({directory, src});
 
   if (!files.length) {
@@ -95,7 +83,6 @@ export default (magnet) => {
         colors: true,
         chunks: false,
       });
-      serveMetalFilesOnce(magnet, outputDirectory);
       resolve(output);
     });
   });

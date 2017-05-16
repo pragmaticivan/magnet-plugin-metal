@@ -4,6 +4,7 @@ import metalJsx from 'babel-preset-metal-jsx';
 import Component from 'metal-component';
 import buildSoy from './build-soy';
 import buildClient from './build-client';
+import start from './start';
 import nodePath from 'path';
 
 const defaultLayout = (req, content, initialState) =>
@@ -14,6 +15,10 @@ const routes = [];
 export default {
   babelPresets() {
     return [metalJsx];
+  },
+
+  async start(magnet) {
+    await start(magnet);
   },
 
   async build(magnet) {
