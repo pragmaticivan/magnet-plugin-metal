@@ -1,8 +1,10 @@
 import path from 'path';
 import es2015 from 'babel-preset-es2015';
+import es2017 from 'babel-preset-es2017';
 import metalJsx from 'babel-preset-metal-jsx';
 import webpack from 'webpack';
 import fs from 'fs-extra';
+import transformRuntime from 'babel-runtime/package';
 
 const metalDirectory = '.magnet/metal';
 
@@ -14,7 +16,6 @@ const buildWebpackConfig = (entry, directory, outputDirectory) => {
       minChunks: 3,
     }),
   ];
-
   return {
     context: directory,
     entry: entry,
@@ -34,7 +35,8 @@ const buildWebpackConfig = (entry, directory, outputDirectory) => {
           use: {
             loader: 'babel-loader',
             options: {
-              presets: [es2015, metalJsx],
+              plugins: [transformRuntime],
+              presets: [es2015, es2017, metalJsx],
             },
           },
         },
