@@ -1,10 +1,6 @@
 import path from 'path';
-import es2015 from 'babel-preset-es2015';
-import es2017 from 'babel-preset-es2017';
-import metalJsx from 'babel-preset-metal-jsx';
 import webpack from 'webpack';
 import fs from 'fs-extra';
-import transformRuntime from 'babel-runtime/package';
 
 const metalDirectory = '.magnet/metal';
 
@@ -25,19 +21,28 @@ const buildWebpackConfig = (entry, directory, outputDirectory) => {
     },
     plugins: plugins,
     resolveLoader: {
-      modules: [path.join(__dirname, '../node_modules'), 'node_modules'],
+      modules: [
+        path.join(__dirname, '../node_modules'),
+        'node_modules',
+      ],
     },
     module: {
-      rules: [
+      loaders: [
         {
           test: /\.js$/,
-          exclude: /node_modules/,
-          use: {
-            loader: 'babel-loader',
-            options: {
-              plugins: [transformRuntime],
-              presets: [es2015, es2017, metalJsx],
-            },
+          loader: 'babel-loader',
+          exclude: function(modulePath) {
+            return /node_modules/.test(modulePath) &&
+              !/node_modules\/magnet-plugin-metal\/render\.js/.test(modulePath);
+          },
+          query: {
+            'presets': ['es2015', 'es2017', 'metal-jsx'],
+            'plugins': [
+              ['transform-runtime', {
+                'polyfill': false,
+                'regenerator': true,
+              }],
+            ],
           },
         },
       ],

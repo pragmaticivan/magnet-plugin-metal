@@ -1,6 +1,6 @@
 {
   "name": "magnet-plugin-metal",
-  "version": "v0.2.0-alpha.1",
+  "version": "v0.2.0-alpha.2",
   "description": "Magnet plugin for metaljs support",
   "engines": {
     "node": ">=7.6.0"
@@ -29,6 +29,7 @@
     "url": "https://github.com/wedeploy/magnet-plugin-metal.git"
   },
   "dependencies": {
+    "babel-plugin-transform-regenerator": "^6.24.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-es2017": "^6.24.1",
     "babel-preset-metal-jsx": "0.1.1",
