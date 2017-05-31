@@ -93,7 +93,7 @@ export default {
  * @param {string} layoutContent
  */
 function assertLayoutContainsBody(layoutContent) {
-  if (layoutContent.toLowerCase().indexOf('<body>') === -1 ||
+  if (layoutContent.toLowerCase().indexOf('<body') === -1 ||
       layoutContent.toLowerCase().indexOf('</body>') === -1) {
     throw new Error('Error. Page layout does not contain <body></body>".');
   }
@@ -109,16 +109,18 @@ function enhanceLayout(layoutContent, data) {
   assertLayoutContainsBody(layoutContent);
 
   layoutContent = layoutContent
+    .replace(/(<body\b[^>]*>)/i, '$1<div id="__magnet">')
     .replace('</body>',
+      `</div>` +
       `<script src="/.metal/common.js"></script>` +
       `<script src="/.metal/render.js"></script>` +
       `<script src="${data.__MAGNET_PAGE_SOURCE__}"></script>` +
       `<script>` +
       `__MAGNET_STATE__=${JSON.stringify(data)};` +
-      `__MAGNET_RENDER__(__MAGNET_STATE__.__MAGNET_PAGE__, __MAGNET_STATE__);` +
       `__MAGNET_ROUTES__=${JSON.stringify(routes)};` +
       `__MAGNET_ROUTES__.forEach(` +
         `function(r) {__MAGNET_REGISTER_PAGE__(r.path, r.page)});` +
+        `__MAGNET_ROUTER__.dispatch();` +
       `</script></body>`);
 
   return `<!DOCTYPE html>${layoutContent}`;

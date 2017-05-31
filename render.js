@@ -1,7 +1,7 @@
-import {ComponentRegistry} from 'metal-component';
+import {CancellablePromise} from 'metal-promise';
 import {Component} from 'metal-component';
-import {Router} from 'metal-router';
 import {globalEval} from 'metal-dom';
+import {Router} from 'metal-router';
 
 /**
  * Custom screen for Magnet binds into metal router lifecycle.
@@ -12,7 +12,7 @@ class MagnetScreen extends Router.defaultScreen {
    */
   flip() {
     const deferred = super.flip();
-    __MAGNET_STATE__ = Router.activeState;
+    __MAGNET_STATE__ = Router.getActiveState();
     return deferred;
   }
 
@@ -20,6 +20,12 @@ class MagnetScreen extends Router.defaultScreen {
    * @inheritDoc
    */
   load(path) {
+    const firstRender = Router.getActiveComponent() === null;
+
+    if (firstRender) {
+      return CancellablePromise.resolve(__MAGNET_STATE__);
+    }
+
     return super.load(path)
       .then(async () => {
         const data = this.maybeParseLastLoadedStateAsJson();
@@ -46,44 +52,23 @@ class MagnetScreen extends Router.defaultScreen {
 Router.defaultScreen = MagnetScreen;
 
 /**
- * Render Metal.js component from component name. Sets component element as
- * the "document.body.firstChild", relevant to start pacthing the entire body
- * with the page contents.
- * @param {string} componentName
- * @param {Object} initialState
- * @return {Component} The rendered component.
- */
-window.__MAGNET_RENDER__ = function(componentName, initialState) {
-  let lookupPatchElement = () => document.querySelector('body > :not(script)');
-  if (!lookupPatchElement()) {
-    // Inserts element to start patching
-    document.body.insertAdjacentHTML('afterbegin', '<div></div>');
-  }
-  initialState = initialState || {};
-  initialState.element = lookupPatchElement();
-  return Component.render(
-    ComponentRegistry.getConstructor(componentName), initialState);
-};
-
-/**
  * Register page route and component name.
  * @param {!*} path
- * @param {!string} componentName
- * @param {?object=} config
+ * @param {!string} component
  * @return {Router} The route for the registered component.
  */
 window.__MAGNET_REGISTER_PAGE__ = function(
     path,
-    componentName,
-    config = {
-      element: 'body > :not(script)',
-      fetch: true,
-      fetchTimeout: 120000,
-    }
+    component,
   ) {
-  config.path = normalizePath(path);
-  config.component = componentName;
-  return Component.render(Router, config);
+  const config = {
+    component,
+    element: '#__magnet > :not(script)',
+    fetch: true,
+    fetchTimeout: 120000,
+    path: normalizePath(path),
+  };
+  return Component.render(Router, config, '#__magnet');
 };
 
 /**
