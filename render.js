@@ -24,6 +24,7 @@ class MagnetScreen extends Router.defaultScreen {
 
     if (firstRender) {
       const firstRenderState = __MAGNET_STATE__;
+      this.router.lastPath = path;
       this.router.lastLoadedState = firstRenderState;
       return CancellablePromise.resolve(firstRenderState);
     }
