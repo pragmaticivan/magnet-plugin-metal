@@ -32,10 +32,7 @@ class MagnetScreen extends Router.defaultScreen {
     return super.load(path)
       .then(async () => {
         const data = this.maybeParseLastLoadedStateAsJson();
-        const src = data.__MAGNET_PAGE_SOURCE__;
-        const page = data.__MAGNET_PAGE__;
-        await this.prefetch(src);
-        this.router.component = page;
+        await this.prefetch(data.__MAGNET_PAGE_SOURCE__);
         return data;
       });
   }
