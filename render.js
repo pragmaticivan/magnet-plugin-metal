@@ -1,4 +1,5 @@
 import {CancellablePromise} from 'metal-promise';
+import {ComponentRegistry} from 'metal-component';
 import {Component} from 'metal-component';
 import {globalEval} from 'metal-dom';
 import {Router} from 'metal-router';
@@ -7,6 +8,18 @@ import {Router} from 'metal-router';
  * Custom screen for Magnet binds into metal router lifecycle.
  */
 class MagnetScreen extends Router.defaultScreen {
+  /**
+   * @param {string} page Page constructor name.
+   * @return {?Component}
+   */
+  getPageComponentConstructor(page) {
+    const component = ComponentRegistry.components_[page];
+    if (component) {
+      return component;
+    }
+    return null;
+  }
+
   /**
    * @inheritDoc
    */
@@ -32,7 +45,10 @@ class MagnetScreen extends Router.defaultScreen {
     return super.load(path)
       .then(async () => {
         const data = this.maybeParseLastLoadedStateAsJson();
-        await this.prefetch(data.__MAGNET_PAGE_SOURCE__);
+        const page = this.getPageComponentConstructor(data.__MAGNET_PAGE__);
+        if (!page) {
+          await this.prefetch(data.__MAGNET_PAGE_SOURCE__);
+        }
         return data;
       });
   }
