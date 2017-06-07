@@ -39,9 +39,9 @@
     "metal-assertions": "^2.8.0",
     "metal-component": "^2.11.0",
     "metal-dom": "^2.9.0",
-    "metal-jsx": "^2.11.1",
+    "metal-jsx": "^2.12.0",
     "metal-router": "^3.2.0",
-    "metal-soy": "^2.11.0",
+    "metal-soy": "^2.12.0",
     "metal-tools-soy": "^4.0.1",
     "webpack": "^2.4.1"
   },
