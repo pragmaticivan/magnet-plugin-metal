@@ -71,7 +71,9 @@ Router.defaultScreen = MagnetScreen;
  * Returns active component.
  * @type {Router}
  */
-window.__MAGNET_COMPONENT__ = () => Router.getActiveComponent();
+window.__MAGNET_COMPONENT__ = function() {
+  return Router.getActiveComponent();
+}
 
 /**
  * Register page route and component name.
