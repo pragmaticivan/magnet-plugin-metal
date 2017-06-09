@@ -26,6 +26,7 @@ class MagnetScreen extends Router.defaultScreen {
   flip() {
     const deferred = super.flip();
     __MAGNET_STATE__ = Router.getActiveState();
+    __MAGNET_COMPONENT__ = Router.getActiveComponent();
     return deferred;
   }
 
@@ -68,20 +69,12 @@ class MagnetScreen extends Router.defaultScreen {
 Router.defaultScreen = MagnetScreen;
 
 /**
- * Returns active component.
- * @type {Router}
- */
-window.__MAGNET_COMPONENT__ = function() {
-  return Router.getActiveComponent();
-}
-
-/**
  * Register page route and component name.
  * @param {!*} path
  * @param {!string} component
  * @return {Router} The route for the registered component.
  */
-window.__MAGNET_REGISTER_PAGE__ = function(
+__MAGNET_REGISTER_PAGE__ = function(
     path,
     component,
   ) {
@@ -99,7 +92,7 @@ window.__MAGNET_REGISTER_PAGE__ = function(
  * Returns internal router instance.
  * @type {Router}
  */
-window.__MAGNET_ROUTER__ = Router.router();
+__MAGNET_ROUTER__ = Router.router();
 
 /**
  * Normalize path. Supports evaluation of "regex:" prefixed paths.
