@@ -25,8 +25,8 @@ class MagnetScreen extends Router.defaultScreen {
    */
   flip() {
     return super.flip().then(value => {
-      __MAGNET_STATE__ = Router.getActiveState();
-      __MAGNET_COMPONENT__ = Router.getActiveComponent();
+      window.__MAGNET_STATE__ = Router.getActiveState();
+      window.__MAGNET_COMPONENT__ = Router.getActiveComponent();
       return value;
     });
   }
@@ -38,7 +38,7 @@ class MagnetScreen extends Router.defaultScreen {
     const firstRender = Router.getActiveComponent() === null;
 
     if (firstRender) {
-      const firstRenderState = __MAGNET_STATE__;
+      const firstRenderState = window.__MAGNET_STATE__;
       this.router.lastPath = path;
       this.router.lastLoadedState = firstRenderState;
       return CancellablePromise.resolve(firstRenderState);
@@ -112,7 +112,7 @@ function normalizePath(path) {
 
 // Events ----------------------------------------------------------------------
 
-__MAGNET_ROUTER__.on('endNavigate', (data) => {
+window.__MAGNET_ROUTER__.on('endNavigate', (data) => {
   // Redirects in case of request error
   if (data.error) {
     if (data.error.requestError) {
@@ -122,7 +122,7 @@ __MAGNET_ROUTER__.on('endNavigate', (data) => {
   }
 });
 
-__MAGNET_ROUTER__.on('startNavigate', (data) => {
+window.__MAGNET_ROUTER__.on('startNavigate', (data) => {
   // Clear router cache after for submission
   if (data.form) {
     __MAGNET_ROUTER__.clearScreensCache();
