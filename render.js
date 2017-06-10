@@ -74,7 +74,7 @@ Router.defaultScreen = MagnetScreen;
  * @param {!string} component
  * @return {Router} The route for the registered component.
  */
-__MAGNET_REGISTER_PAGE__ = function(
+window.__MAGNET_REGISTER_PAGE__ = function(
     path,
     component,
   ) {
@@ -92,7 +92,7 @@ __MAGNET_REGISTER_PAGE__ = function(
  * Returns internal router instance.
  * @type {Router}
  */
-__MAGNET_ROUTER__ = Router.router();
+window.__MAGNET_ROUTER__ = Router.router();
 
 /**
  * Normalize path. Supports evaluation of "regex:" prefixed paths.
