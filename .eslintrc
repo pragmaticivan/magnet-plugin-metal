@@ -7,6 +7,7 @@
   "globals": {
     "__MAGNET_STATE__": true,
     "__MAGNET_ROUTER__": true,
+    "__MAGNET_COMPONENT__": true,
     "document": true,
     "IncrementalDOM": true,
     "window": true
