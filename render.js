@@ -24,10 +24,11 @@ class MagnetScreen extends Router.defaultScreen {
    * @inheritDoc
    */
   flip() {
-    const deferred = super.flip();
-    __MAGNET_STATE__ = Router.getActiveState();
-    __MAGNET_COMPONENT__ = Router.getActiveComponent();
-    return deferred;
+    return super.flip().then(value => {
+      __MAGNET_STATE__ = Router.getActiveState();
+      __MAGNET_COMPONENT__ = Router.getActiveComponent();
+      return value;
+    });
   }
 
   /**
