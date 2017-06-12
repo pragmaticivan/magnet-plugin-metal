@@ -118,9 +118,11 @@ function enhanceLayout(layoutContent, data) {
       `<script>` +
       `__MAGNET_STATE__=${JSON.stringify(data)};` +
       `__MAGNET_ROUTES__=${JSON.stringify(routes)};` +
-      `__MAGNET_ROUTES__.forEach(` +
-        `function(r) {__MAGNET_REGISTER_PAGE__(r.path, r.page)});` +
+      `document.addEventListener("DOMContentLoaded", function(e) {` +
+        `__MAGNET_ROUTES__.forEach(` +
+          `function(r) {__MAGNET_REGISTER_PAGE__(r.path, r.page)});` +
         `__MAGNET_ROUTER__.dispatch();` +
+      `});` +
       `</script></body>`);
 
   return `<!DOCTYPE html>${layoutContent}`;
