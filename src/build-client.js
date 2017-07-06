@@ -20,6 +20,16 @@ const buildWebpackConfig = (entry, directory, outputDirectory) => {
       filename: '[name]',
     },
     plugins: plugins,
+    resolve: {
+      alias: {
+        'metal-component': path.resolve(
+          __dirname, '../node_modules/metal-component/'),
+        'metal-incremental-dom': path.resolve(
+          __dirname, '../node_modules/metal-incremental-dom/'),
+        'metal-soy-bundle': path.resolve(
+          __dirname, '../node_modules/metal-soy-bundle/'),
+      },
+    },
     resolveLoader: {
       modules: [
         path.join(__dirname, '../node_modules'),
