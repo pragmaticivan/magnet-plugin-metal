@@ -1,6 +1,6 @@
 {
   "name": "magnet-plugin-metal",
-  "version": "0.8.4",
+  "version": "0.9.0",
   "description": "Magnet plugin for metaljs support",
   "engines": {
     "node": ">=7.6.0"
