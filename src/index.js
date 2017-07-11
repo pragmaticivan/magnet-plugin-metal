@@ -59,7 +59,7 @@ export default {
 
           let data = {};
           if (isFunction(getInitialState)) {
-            data = await getInitialState(req, res) || {};
+            data = await getInitialState(req, res, magnet) || {};
           }
 
           data.__MAGNET_PAGE__ = module.default.name;
