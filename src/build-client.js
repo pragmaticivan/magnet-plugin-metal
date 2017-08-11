@@ -4,7 +4,7 @@ import fs from 'fs-extra';
 
 const metalDirectory = '.magnet/metal';
 
-const buildWebpackConfig = (entry, directory, outputDirectory) => {
+const buildWebpackConfig = (entry, directory, outputDirectory, dev) => {
   const plugins = [
     new webpack.optimize.CommonsChunkPlugin({
       name: 'common',
@@ -12,6 +12,22 @@ const buildWebpackConfig = (entry, directory, outputDirectory) => {
       minChunks: 3,
     }),
   ];
+
+  if (!dev) {
+    plugins.push(new webpack.optimize.UglifyJsPlugin({
+      mangle: {
+        keep_fnames: true,
+      },
+      output: {
+        comments: false,
+      },
+      compress: {
+        keep_fnames: true,
+        warnings: false,
+      },
+    }));
+  }
+
   return {
     context: directory,
     entry: entry,
@@ -63,6 +79,7 @@ const buildWebpackConfig = (entry, directory, outputDirectory) => {
 export default (magnet) => {
   const config = magnet.getConfig();
   const metalConfig = config.magnet.pluginsConfig.metal;
+  const dev = config.dev;
 
   let src = ['**/*.js'];
   if (metalConfig && metalConfig.src) {
@@ -87,7 +104,8 @@ export default (magnet) => {
   const webpackClientConfig = buildWebpackConfig(
     entry,
     directory,
-    outputDirectory
+    outputDirectory,
+    dev
   );
 
   return new Promise((resolve, reject) => {
