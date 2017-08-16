@@ -35,6 +35,7 @@
     "babel-preset-metal-jsx": "0.1.1",
     "express": "^4.15.2",
     "fs-extra": "^3.0.0",
+    "metal": "^2.13.2",
     "metal-assertions": "^2.13.2",
     "metal-component": "^2.13.2",
     "metal-dom": "^2.13.2",
@@ -42,7 +43,7 @@
     "metal-router": "^3.6.3",
     "metal-soy": "^2.13.1",
     "metal-tools-soy": "^4.0.1",
-    "metal": "^2.13.2",
+    "node-esapi": "0.0.1",
     "webpack": "^3.5.3"
   },
   "devDependencies": {

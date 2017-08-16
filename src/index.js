@@ -1,6 +1,7 @@
 import {assertDefAndNotNull, assertString} from 'metal-assertions';
 import {isDefAndNotNull, isFunction, isObject, isString} from 'metal';
 import {core} from 'metal';
+import ESAPI from 'node-esapi';
 import metalJsx from 'babel-preset-metal-jsx';
 import Component from 'metal-component';
 import buildSoy from './build-soy';
@@ -10,6 +11,7 @@ import nodePath from 'path';
 
 const defaultLayout = (req, content, initialState) =>
   `<html><head></head><body>${content}</body></html>`;
+const encoder = ESAPI.encoder();
 
 const routes = [];
 
@@ -122,16 +124,24 @@ function assertLayoutContainsBody(layoutContent) {
 function enhanceLayout(layoutContent, data, formatFilename) {
   assertLayoutContainsBody(layoutContent);
 
+  const encodedPageSource = encoder.encodeForHTMLAttribute(
+    data.__MAGNET_PAGE_SOURCE__
+  );
+  const encodedMagnetState = encoder.encodeForJavaScript(JSON.stringify(data));
+  const encodedMagnetRoutes = encoder.encodeForJavaScript(
+    JSON.stringify(routes)
+  );
+
   layoutContent = layoutContent
     .replace(/(<body\b[^>]*>)/i, '$1<div id="__magnet">')
     .replace('</body>',
       `</div>` +
       `<script src="${formatFilename('/.metal/common.js')}"></script>` +
       `<script src="${formatFilename('/.metal/render.js')}"></script>` +
-      `<script src="${data.__MAGNET_PAGE_SOURCE__}"></script>` +
+      `<script src="${encodedPageSource}"></script>` +
       `<script>` +
-      `__MAGNET_STATE__=${JSON.stringify(data)};` +
-      `__MAGNET_ROUTES__=${JSON.stringify(routes)};` +
+      `__MAGNET_STATE__=JSON.parse('${encodedMagnetState}');` +
+      `__MAGNET_ROUTES__=JSON.parse('${encodedMagnetRoutes}');` +
       `document.addEventListener("DOMContentLoaded", function(e) {` +
         `__MAGNET_ROUTES__.forEach(` +
           `function(r) {__MAGNET_REGISTER_PAGE__(r.path, r.page)});` +
