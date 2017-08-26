@@ -53,7 +53,7 @@ describe('pluginMetal', () => {
   });
 
   describe('.register', () => {
-    const directory = `${process.cwd()}/test/fixtures/empty`;
+    const directory = `/tmp/.magnet`;
 
     it('should throw exception if route method is not string', () => {
       const magnet = new Magnet({directory});
