@@ -69,7 +69,7 @@ const buildWebpackConfig = (entry, directory, outputDirectory, dev) => {
 export default (magnet) => {
   const config = magnet.getConfig();
   const metalConfig = config.magnet.pluginsConfig.metal;
-  const dev = config.dev;
+  const dev = config.magnet.dev;
 
   let src = ['**/*.js'];
   if (metalConfig && metalConfig.src) {
