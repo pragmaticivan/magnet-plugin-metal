@@ -20,10 +20,10 @@ export default (webpackConfig, magnet) => {
   }
 
   webpackConfig.entry = getEntries(webpackConfig, files);
+  webpackConfig.externals = [nodeExternals()];
   webpackConfig.module.loaders = getLoaders(webpackConfig, dev);
   webpackConfig.plugins = getPlugins(webpackConfig, dev);
   webpackConfig.target= 'node';
-  webpackConfig.externals = [nodeExternals()];
 
   return webpackConfig;
 };
