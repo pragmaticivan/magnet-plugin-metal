@@ -1,5 +1,6 @@
 import path from 'path';
 import webpack from 'webpack';
+import nodeExternals from 'webpack-node-externals';
 
 export default (webpackConfig, magnet) => {
   const config = magnet.getConfig();
@@ -21,6 +22,8 @@ export default (webpackConfig, magnet) => {
   webpackConfig.entry = getEntries(webpackConfig, files);
   webpackConfig.module.loaders = getLoaders(webpackConfig, dev);
   webpackConfig.plugins = getPlugins(webpackConfig, dev);
+  webpackConfig.target= 'node';
+  webpackConfig.externals = [nodeExternals()];
 
   return webpackConfig;
 };
