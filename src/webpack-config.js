@@ -19,14 +19,24 @@ export default (webpackConfig, magnet) => {
     return webpackConfig;
   }
 
+  prepareMagnetConfig(webpackConfig, files, dev);
+
+  return webpackConfig;
+};
+
+/**
+ * Modifies the provided webpackConfig reference.
+ * @param {!Object} webpackConfig
+ * @param {!Array} files
+ * @param {!boolean} dev
+ */
+function prepareMagnetConfig(webpackConfig, files, dev) {
   webpackConfig.entry = getEntries(webpackConfig, files);
   webpackConfig.externals = [nodeExternals()];
   webpackConfig.module.loaders = getLoaders(webpackConfig, dev);
   webpackConfig.plugins = getPlugins(webpackConfig, dev);
   webpackConfig.target= 'node';
-
-  return webpackConfig;
-};
+}
 
 /**
  * @param {!Object} webpackConfig
