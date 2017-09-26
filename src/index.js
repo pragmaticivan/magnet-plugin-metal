@@ -5,7 +5,7 @@ import ESAPI from 'node-esapi';
 import metalJsx from 'babel-preset-metal-jsx';
 import Component from 'metal-component';
 import buildSoy from './build-soy';
-import buildClient from './build-client';
+import configClientBuild from './config-client-build';
 import start from './start';
 import nodePath from 'path';
 
@@ -26,7 +26,10 @@ export default {
 
   async build(magnet) {
     await buildSoy(magnet);
-    await buildClient(magnet);
+  },
+
+  async configClientBuild(webpackConfig, magnet) {
+    return await configClientBuild(webpackConfig, magnet);
   },
 
   test(module, filename, magnet) {
