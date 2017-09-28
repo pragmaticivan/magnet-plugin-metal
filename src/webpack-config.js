@@ -1,6 +1,5 @@
 import path from 'path';
 import webpack from 'webpack';
-import nodeExternals from 'webpack-node-externals';
 
 export default (webpackConfig, magnet) => {
   const config = magnet.getConfig();
@@ -32,10 +31,8 @@ export default (webpackConfig, magnet) => {
  */
 function prepareMagnetConfig(webpackConfig, files, dev) {
   webpackConfig.entry = getEntries(webpackConfig, files);
-  webpackConfig.externals = [nodeExternals()];
   webpackConfig.module.loaders = getLoaders(webpackConfig, dev);
   webpackConfig.plugins = getPlugins(webpackConfig, dev);
-  webpackConfig.target= 'node';
 }
 
 /**
@@ -47,7 +44,7 @@ function getPlugins(webpackConfig, dev) {
   const plugins = [
     new webpack.optimize.CommonsChunkPlugin({
       name: 'common',
-      filename: 'common.js',
+      filename: 'metal/common.js',
       minChunks: 3,
     }),
   ];
