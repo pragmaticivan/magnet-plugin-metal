@@ -44,8 +44,7 @@
     "metal-soy": "^2.13.1",
     "metal-tools-soy": "^4.0.1",
     "node-esapi": "0.0.1",
-    "webpack": "^3.5.3",
-    "webpack-node-externals": "^1.6.0"
+    "webpack": "^3.5.3"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
