@@ -77,8 +77,7 @@ function getLoaders(webpackConfig, dev) {
       loader: 'babel-loader',
       exclude: function(modulePath) {
         return /node_modules/.test(modulePath) &&
-          !/node_modules\/magnet-plugin-metal\/render\.js/.test(modulePath) ||
-          /\.soy.js$/.test(modulePath);
+          !/node_modules\/magnet-plugin-metal\/render\.js/.test(modulePath);
       },
       query: {
         'presets': ['es2015', 'es2017', 'metal-jsx'],
