@@ -1,6 +1,6 @@
 {
   "name": "magnet-plugin-metal",
-  "version": "1.2.0-alpha.2",
+  "version": "1.0.1",
   "description": "Magnet plugin for metaljs support",
   "engines": {
     "node": ">=7.6.0"
@@ -35,13 +35,13 @@
     "babel-preset-metal-jsx": "0.1.1",
     "express": "^4.16.2",
     "fs-extra": "^4.0.2",
-    "metal": "^2.14.0",
-    "metal-assertions": "^2.14.0",
-    "metal-component": "^2.14.1",
-    "metal-dom": "^2.14.0",
-    "metal-jsx": "^2.14.1",
+    "metal": "^2.15.0",
+    "metal-assertions": "^2.15.0",
+    "metal-component": "^2.15.0",
+    "metal-dom": "^2.15.0",
+    "metal-jsx": "^2.15.1",
     "metal-router": "^3.6.3",
-    "metal-soy": "^2.14.1",
+    "metal-soy": "^2.15.1",
     "metal-tools-soy": "^4.0.1",
     "node-esapi": "0.0.1",
     "webpack": "^3.8.1"
