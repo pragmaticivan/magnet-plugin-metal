@@ -1,7 +1,7 @@
-import path from 'path';
-import webpack from 'webpack';
 import babelPresetEnv from 'babel-preset-env';
 import babelPresetJsx from 'babel-preset-metal-jsx';
+import path from 'path';
+import webpack from 'webpack';
 
 export default (webpackConfig, magnet) => {
   const config = magnet.getConfig();

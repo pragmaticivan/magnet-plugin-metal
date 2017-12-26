@@ -1,13 +1,14 @@
 import {assertDefAndNotNull, assertString} from 'metal-assertions';
 import {isDefAndNotNull, isFunction, isObject, isString} from 'metal';
-import {core} from 'metal';
-import ESAPI from 'node-esapi';
-import metalJsx from 'babel-preset-metal-jsx';
+
 import Component from 'metal-component';
+import ESAPI from 'node-esapi';
 import buildSoy from './build-soy';
-import webpackConfig from './webpack-config';
-import start from './start';
+import {core} from 'metal';
+import metalJsx from 'babel-preset-metal-jsx';
 import nodePath from 'path';
+import start from './start';
+import webpackConfig from './webpack-config';
 
 const defaultLayout = (req, content, initialState) =>
   `<html><head></head><body>${content}</body></html>`;
