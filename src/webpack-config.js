@@ -1,5 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
+import babelPresetEnv from 'babel-preset-env';
+import babelPresetJsx from 'babel-preset-metal-jsx';
 
 export default (webpackConfig, magnet) => {
   const config = magnet.getConfig();
@@ -80,11 +82,13 @@ function getLoaders(webpackConfig, dev) {
           !/node_modules\/magnet-plugin-metal\/render\.js/.test(modulePath);
       },
       query: {
-        'presets': ['es2015', 'es2017', 'metal-jsx'],
+        'presets': [babelPresetEnv, babelPresetJsx],
         'plugins': [
           ['transform-runtime', {
+            'helpers': false,
             'polyfill': false,
             'regenerator': true,
+            'moduleName': 'babel-runtime',
           }],
         ],
       },
