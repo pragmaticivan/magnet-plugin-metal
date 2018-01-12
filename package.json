@@ -55,7 +55,7 @@
     "eslint": "^3.17.1",
     "eslint-config-liferay": "^1.0.1",
     "jsdom": "^10.1.0",
-    "magnet": "^2.0.0",
+    "magnet": "^2.3.0",
     "mocha": "^3.2.0",
     "import-sort-cli": "^3.3.0",
     "import-sort-parser-babylon": "^3.2.0",
