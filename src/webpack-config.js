@@ -93,7 +93,7 @@ function getRules(webpackConfig, dev) {
       ],
     },
   ];
-  return [webpackConfig.module.rules, ...rules];
+  return webpackConfig.module.rules.concat(rules);
 }
 
 /**
