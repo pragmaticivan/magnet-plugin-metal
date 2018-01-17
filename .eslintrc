@@ -2,9 +2,13 @@
   "extends": ["liferay"],
   "env": {
     "node": true,
+    "mocha": true,
     "es6": true
   },
   "globals": {
+    "expect": false,
+    "mock": false,
+    "assertAsyncHttpRequest": false,
     "__MAGNET_STATE__": true,
     "__MAGNET_ROUTER__": true,
     "__MAGNET_COMPONENT__": true,
