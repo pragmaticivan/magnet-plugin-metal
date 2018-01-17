@@ -33,7 +33,7 @@ export default (webpackConfig, magnet) => {
  */
 function prepareMagnetConfig(webpackConfig, files, dev) {
   webpackConfig.entry = getEntries(webpackConfig, files);
-  webpackConfig.module.loaders = getLoaders(webpackConfig, dev);
+  webpackConfig.module.rules = getRules(webpackConfig, dev);
   webpackConfig.plugins = getPlugins(webpackConfig, dev);
 }
 
@@ -72,29 +72,28 @@ function getPlugins(webpackConfig, dev) {
  * @param {!boolean} dev
  * @return {Array.<Object>}
  */
-function getLoaders(webpackConfig, dev) {
-  const loaders = [
+function getRules(webpackConfig, dev) {
+  const rules = [
     {
       test: /\.js$/,
-      loader: 'babel-loader',
       exclude: function(modulePath) {
         return /node_modules/.test(modulePath) &&
           !/node_modules\/magnet-plugin-metal\/render\.js/.test(modulePath);
       },
-      query: {
-        'presets': [babelPresetEnv, babelPresetJsx],
-        'plugins': [
-          ['transform-runtime', {
-            'helpers': false,
-            'polyfill': false,
-            'regenerator': true,
-            'moduleName': 'babel-runtime',
-          }],
-        ],
-      },
+      use: [
+        {
+          loader: 'babel-loader',
+          options: {
+            babelrc: false,
+            cacheDirectory: true,
+            presets: [babelPresetEnv , babelPresetJsx],
+            plugins: ['transform-runtime'],
+          },
+        },
+      ],
     },
   ];
-  return webpackConfig.module.loaders.concat(loaders);
+  return [webpackConfig.module.rules, ...rules];
 }
 
 /**
